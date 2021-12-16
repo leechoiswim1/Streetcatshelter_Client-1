@@ -41,9 +41,7 @@ export const addCommunityDB = (
             history.push(`/community/${detailLocation}/${pathName}`);
             dispatch(imgActions.setInitialState());
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       })
     );
   };
@@ -65,7 +63,6 @@ export const getCommunityDB =
       }
     } catch (err) {
       dispatch(errorToast(true));
-      console.error(err);
     }
   };
 

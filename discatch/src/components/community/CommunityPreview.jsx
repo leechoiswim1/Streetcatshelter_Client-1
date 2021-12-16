@@ -20,7 +20,10 @@ const CommunityPreview = (preview) => {
 
     if (pathLength === 6) {
       newImage = preview?.preview[preview?.previewNum - preview.imageNum]?.preview;
+      // 글 작성 또는 수정 시 새로 추가되는 사진의 프리뷰
+
       previewImage = preview?.imageList[preview?.previewNum]?.image;
+      // 글 수정 시 이전에 추가한 사진의 프리뷰
     }
     return (
         <>

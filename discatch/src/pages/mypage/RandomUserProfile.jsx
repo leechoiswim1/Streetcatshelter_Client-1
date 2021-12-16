@@ -12,6 +12,10 @@ import { Template, ProgressBar } from "../../components";
 import { history } from "../../redux/configureStore";
 import { mypageActions } from "../../redux/modules/mypage";
 
+// MOMENT
+import "moment/locale/ko";
+import moment from "moment";
+
 const RandomUserProfile = (props) => {
   const dispatch = useDispatch();
   const userRandomId = props.match.params?.userRandomId;
@@ -19,11 +23,21 @@ const RandomUserProfile = (props) => {
     (state) => state.mypage.userRandomProfile
   );
 
-  //회원 프로필 정보 가져오기
+  // 회원 프로필 정보 가져오기
   useEffect(() => {
     dispatch(mypageActions._getUserProfile(userRandomId));
   }, [userRandomId, dispatch]);
 
+  const createdAt = moment(
+    userRandomProfile.lastActivity !== null && userRandomProfile.lastActivity
+  ).format("YYYY-MM-DD HH:MM");
+  const hourDiff = moment(createdAt).diff(moment(), "hours");
+  // format 1, 보낸지 하루 경과했을 경우 : YYYY.MM.DD hh:mm
+  const updated = moment(createdAt).format("YYYY-MM-DD HH:MM");
+  // format 2, 보낸지 하루 이내일 경우 : 'n 분 전, n 시간 전'
+  const recentlyUpdated = moment(createdAt).fromNow();
+  // 시간 경과에 따라 시간포맷변경(하루기준)
+  const sendtime = hourDiff > -22 ? recentlyUpdated : updated;
   return (
     <Template props={props}>
       <Wrapper>
@@ -68,11 +82,11 @@ const RandomUserProfile = (props) => {
               </div>
             </ActiveBox>
             <ActiveDate>
-              <p>최근 활동</p>
               <p>
-                {userRandomProfile.lastActivity === null
-                  ? "-"
-                  : userRandomProfile.lastActivity}
+                최근 활동 시간:
+                <span>
+                  {userRandomProfile.lastActivity === null ? "-" : sendtime}{" "}
+                </span>
               </p>
             </ActiveDate>
           </UserActive>
@@ -142,7 +156,7 @@ const ProfileInfo = styled.div`
   p {
     font-size: 12px;
     :nth-child(1) {
-      font-weight: 900;
+      font-weight: 700;
       font-size: 14px;
     }
   }
@@ -151,7 +165,7 @@ const Location = styled.div`
   display: flex;
   p {
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 500;
     margin-right: 5px;
   }
 `;
@@ -218,15 +232,17 @@ const ActiveBox = styled.div`
       text-align: center;
       font-size: 12px;
       :nth-child(1) {
-        font-weight: 900;
+        font-weight: 500;
       }
       :nth-child(2) {
         background: #f9c852;
-        width: 18px;
-        height: 18px;
+        width: auto;
+        min-width: 15px;
+        min-height: 15px;
+        height: auto;
         border-radius: 50%;
         text-align: center;
-        font-weight: 900;
+        font-weight: 700;
       }
     }
   }
@@ -240,8 +256,12 @@ const ActiveDate = styled.div`
     margin: 5px auto;
     font-size: 12px;
     width: 95%;
-    :nth-child(1) {
-      font-weight: 900;
+    font-weight: 700;
+    span {
+      margin-left: 5px;
+      font-size: 12px;
+      width: 95%;
+      font-weight: 500;
     }
   }
 `;
@@ -250,7 +270,7 @@ const LikedCatBox = styled.div`
   margin: 15px auto 10px auto;
   p {
     font-size: 14px;
-    font-weight: 900;
+    font-weight: 700;
     margin: 5px 0px;
     :nth-child(2) {
       font-weight: 700;

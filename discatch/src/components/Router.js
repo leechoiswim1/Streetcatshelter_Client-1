@@ -35,9 +35,6 @@ import {
   RandomUserProfile,
 } from "../pages";
 
-// 배포 시 해당 라우트 삭제 예정
-import test from "../pages/test";
-
 // * == ( Router ) -------------------- * //
 const Router = () => {
   useEffect(() => {
@@ -202,7 +199,6 @@ const Router = () => {
         component={Auth(ChatRoomPage, true)}
         exact
       />
-      <Route path="/test" component={Auth(test, true)} exact />
       <Route path={"*"} exact component={NotFound} />
     </Switch>
   );

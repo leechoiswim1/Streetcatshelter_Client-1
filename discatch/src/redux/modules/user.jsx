@@ -20,7 +20,6 @@ const _loginKakao =
 
       history.push("/");
     } catch (e) {
-      console.log(e);
       history.push("/login");
     }
   };
@@ -40,7 +39,6 @@ const _loginNaver =
 
       history.push("/");
     } catch (e) {
-      console.log(e);
       history.push("/login");
     }
   };
@@ -60,7 +58,6 @@ const _loginGoogle =
 
       history.push("/");
     } catch (e) {
-      console.log(e);
       history.push("/login");
     }
   };
@@ -72,9 +69,7 @@ const _logout =
       removeToken("TOKEN");
       dispatch(logout());
       history.push("/login");
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
 const _setLogin =

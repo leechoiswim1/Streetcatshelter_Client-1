@@ -42,6 +42,10 @@ const ButtonStyle = styled.button`
   ${(props) => borderBox(props.radius, props.padding)}
   ${(props) => props.addstyle()};
   align-items: ${(props) => props.alignItems};
+  border-radius: ${(props) => props.borderRadius};
+  &:hover {
+    background: ${(props) => props.hoverBackground};
+  }
 `;
 
 const FloatButton = styled.button`

@@ -29,7 +29,7 @@ const Location = (props) => {
   const dispatch = useDispatch();
   const path = useLocation();
   const catId = props.props.match.params.id;
-  const pathLength = path.pathname.split('/').length;
+  const pathLength = path.pathname.split("/").length;
   const catList = useSelector((state) => state.cat.list);
 
   // 동네 이름
@@ -37,11 +37,11 @@ const Location = (props) => {
   const villageKeyword = useSelector((state) => state.map.keywordList[0]);
   location = villageKeyword;
   const villageList = useSelector((state) => state.mypage.userVillage);
-  if (location === villageList[0]?.split(' ')[2]) {
+  if (location === villageList[0]?.split(" ")[2]) {
     location = villageList[0];
-  } else if (location === villageList[1]?.split(' ')[2]) {
+  } else if (location === villageList[1]?.split(" ")[2]) {
     location = villageList[1];
-  } else if (location === villageList[2]?.split(' ')[2]) {
+  } else if (location === villageList[2]?.split(" ")[2]) {
     location = villageList[2];
   }
 
@@ -53,14 +53,14 @@ const Location = (props) => {
   const [toastState, setToastState] = useState(false);
   const [searchToastState, setSearchToastState] = useState(false);
   const [keywordToastState, setKeywordToastState] = useState(false);
-  
+
   // 고양이 지도에 표시하기
   const showCats = () => {
     const mapContainer = document.getElementById("myMap"), // 지도를 표시할 div
-    mapOption = {
-      center: new kakao.maps.LatLng(0, 0), // 지도의 중심좌표
-      level: 2, // 지도의 확대 레벨
-    };
+      mapOption = {
+        center: new kakao.maps.LatLng(0, 0), // 지도의 중심좌표
+        level: 2, // 지도의 확대 레벨
+      };
     const map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
     // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
     const mapTypeControl = new kakao.maps.MapTypeControl();
@@ -136,22 +136,24 @@ const Location = (props) => {
         // 마커 위에 인포윈도우를 표시합니다
         infowindow.open(map, markers);
       });
-      markers.setMap(map);
+
+      // 지도에 마커를 표시합니다.
+      kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+        //클릭한 위도, 경도 정보를 가져옵니다.
+        const latlng = mouseEvent.latLng;
+        //위도 경도 값을 useState를 이용해서 useEffect 밖으로 빼냅니다.
+        setLatitude(latlng.getLat());
+        setLongitude(latlng.getLng());
+        //마커 위치를 클릭한 위치로 옮깁니다.
+        marker.setPosition(latlng);
+        //마커를 지도상에 보여줍니다.
+        marker.setMap(map);
+        // 지도에 마커를 표시하면 인포윈도우 닫기
+        infowindow.close();
+      });
     }
 
-    // 지도에 마커를 표시합니다.
-    kakao.maps.event.addListener(map, "click", function (mouseEvent) {
-      //클릭한 위도, 경도 정보를 가져옵니다.
-      const latlng = mouseEvent.latLng;
-      //위도 경도 값을 useState를 이용해서 useEffect 밖으로 빼냅니다.
-      setLatitude(latlng.getLat());
-      setLongitude(latlng.getLng());
-      //마커 위치를 클릭한 위치로 옮깁니다.
-      marker.setPosition(latlng);
-      //마커를 지도상에 보여줍니다.
-      marker.setMap(map);
-    });
-
+    // 사용자의 주소 지도에 표시
     const ps = new kakao.maps.services.Places();
     ps.keywordSearch(location, placesSearchCB);
 
@@ -208,7 +210,10 @@ const Location = (props) => {
     }
     dispatch(searchKeywordMap(searchKeyword));
     const iwRemoveable = true;
-    var infowindow = new kakao.maps.InfoWindow({ zIndex: 1, removable: iwRemoveable });
+    var infowindow = new kakao.maps.InfoWindow({
+      zIndex: 1,
+      removable: iwRemoveable,
+    });
     const container = document.getElementById("myMap");
     const options = {
       center: new kakao.maps.LatLng(0, 0),
@@ -229,7 +234,6 @@ const Location = (props) => {
         displayPagination(pagination);
         setPlaces(data);
       } else {
-
         setModal(0);
         setTimeout(() => {
           setKeywordToastState(true);
@@ -307,7 +311,7 @@ const Location = (props) => {
               </button>
             </div>
           </div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-        iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+          iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
         // 인포윈도우를 생성합니다
         let infowindow = new kakao.maps.InfoWindow({
@@ -357,6 +361,7 @@ const Location = (props) => {
           map.setBounds(bounds);
         }
       }
+
       let marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x),
@@ -366,7 +371,7 @@ const Location = (props) => {
         infowindow.setContent(
           '<div style="padding:5px;font-size:12px;">' +
             place.place_name +
-          '</div>'
+            "</div>"
         );
         infowindow.open(map, marker);
       });
@@ -388,7 +393,7 @@ const Location = (props) => {
       showCats();
     }
   }, [catList, position, location, dispatch]);
-  
+
   // 토스트 모달
   useEffect(() => {
     if (toastState) {
@@ -413,7 +418,7 @@ const Location = (props) => {
           return css`
             display: flex;
             width: 300px;
-            border: 1px solid #FBD986;
+            border: 1px solid #fbd986;
             height: 30px;
             border-radius: 15px;
             margin: 10px auto;
@@ -423,15 +428,15 @@ const Location = (props) => {
           `;
         }}
       >
-        <RefreshCcw 
-          onClick={()=>history.go(0)}
+        <RefreshCcw
+          onClick={() => history.go(0)}
           size="50"
           style={{
-            position:"relative", 
-            top: "50px", 
-            zIndex:'2', 
-            width:'40px', 
-            cursor: "pointer"
+            position: "relative",
+            top: "50px",
+            zIndex: "2",
+            width: "40px",
+            cursor: "pointer",
           }}
         />
         <input
@@ -490,25 +495,30 @@ const Location = (props) => {
             )}
             <div id="result-list">
               {Places.map((item, i) => (
-                <List onClick={()=> function (){
-                  const mapContainer = document.getElementById("myMap"),
-                  mapOption = {
-                    center: new kakao.maps.LatLng(item.y, item.x),
-                    level: 2,
-                  };
-                  const map = new kakao.maps.Map(mapContainer, mapOption);
-                  for (let i = 0; i < position.length; i++) {
-                  const imageSrc =
-                  "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-                  const imageSize = new kakao.maps.Size(24, 35);
-                  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-                  const markers = new kakao.maps.Marker({
-                    map: map, // 마커를 표시할 지도
-                    position: position[i].latlng, // 마커를 표시할 위치
-                    title: catList[i].catName, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                    image: markerImage, // 마커 이미지
-                  });
-                  const iwContent = `
+                <List
+                  onClick={() =>
+                    (function () {
+                      const mapContainer = document.getElementById("myMap"),
+                        mapOption = {
+                          center: new kakao.maps.LatLng(item.y, item.x),
+                          level: 2,
+                        };
+                      const map = new kakao.maps.Map(mapContainer, mapOption);
+                      for (let i = 0; i < position.length; i++) {
+                        const imageSrc =
+                          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+                        const imageSize = new kakao.maps.Size(24, 35);
+                        const markerImage = new kakao.maps.MarkerImage(
+                          imageSrc,
+                          imageSize
+                        );
+                        const markers = new kakao.maps.Marker({
+                          map: map, // 마커를 표시할 지도
+                          position: position[i].latlng, // 마커를 표시할 위치
+                          title: catList[i].catName, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                          image: markerImage, // 마커 이미지
+                        });
+                        const iwContent = `
                     <div style="display:flex">
                       <div style="width: 80px; height: 80px; border-radius:80px;">
                         <img width="80" 
@@ -536,46 +546,67 @@ const Location = (props) => {
                         </button>
                       </div>
                     </div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-                    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+                          iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
-                  // 인포윈도우를 생성합니다
-                  const infowindow = new kakao.maps.InfoWindow({
-                    content: iwContent,
-                    removable: iwRemoveable,
-                  });
-                  kakao.maps.event.addListener(markers, "click", function () {
-                    // 마커 위에 인포윈도우를 표시합니다
-                    infowindow.open(map, markers);
-                  });
-                  markers.setMap(map);
+                        // 인포윈도우를 생성합니다
+                        const infowindow = new kakao.maps.InfoWindow({
+                          content: iwContent,
+                          removable: iwRemoveable,
+                        });
+                        kakao.maps.event.addListener(
+                          markers,
+                          "click",
+                          function () {
+                            // 마커 위에 인포윈도우를 표시합니다
+                            infowindow.open(map, markers);
+                          }
+                        );
+                        markers.setMap(map);
+                      }
+                      let bounds = new kakao.maps.LatLngBounds();
+                      bounds.extend(new kakao.maps.LatLng(item.y, item.x));
+
+                      const catMarker = new kakao.maps.Marker({
+                        position: map.getCenter(),
+                      });
+                      let marker = new kakao.maps.Marker({
+                        map: map,
+                        position: new kakao.maps.LatLng(item.y, item.x),
+                      });
+                      const iwRemoveable = true;
+                      var infowindow = new kakao.maps.InfoWindow({
+                        zIndex: 1,
+                        removable: iwRemoveable,
+                      });
+                      kakao.maps.event.addListener(
+                        marker,
+                        "click",
+                        function () {
+                          infowindow.setContent(
+                            '<div style="padding:5px;font-size:12px;">' +
+                              item.place_name +
+                              "</div>"
+                          );
+                          infowindow.open(map, marker);
+                        }
+                      );
+                      marker.setMap(map);
+                      kakao.maps.event.addListener(
+                        map,
+                        "click",
+                        function (mouseEvent) {
+                          const latlng = mouseEvent.latLng;
+                          setLatitude(latlng.getLat());
+                          setLongitude(latlng.getLng());
+                          catMarker.setPosition(latlng);
+                          catMarker.setMap(map);
+                        }
+                      );
+                    })()
                   }
-                  let bounds = new kakao.maps.LatLngBounds();
-                  bounds.extend(new kakao.maps.LatLng(item.y, item.x));
-                  
-                  const catMarker = new kakao.maps.Marker({ position: map.getCenter() });
-                  let marker = new kakao.maps.Marker({
-                    map:map,
-                    position: new kakao.maps.LatLng(item.y, item.x),
-                  });
-                  const iwRemoveable = true;
-                  var infowindow = new kakao.maps.InfoWindow({ zIndex: 1, removable: iwRemoveable });
-                  kakao.maps.event.addListener(marker, "click", function () {
-                    infowindow.setContent(
-                      '<div style="padding:5px;font-size:12px;">' +
-                        item.place_name +
-                      '</div>'
-                    );
-                    infowindow.open(map, marker);
-                  });
-                  marker.setMap(map);
-                  kakao.maps.event.addListener(map, "click", function (mouseEvent) {
-                    const latlng = mouseEvent.latLng;
-                    setLatitude(latlng.getLat());
-                    setLongitude(latlng.getLng());
-                    catMarker.setPosition(latlng);
-                    catMarker.setMap(map);
-                  });
-                }()} props={Places} key={i}>
+                  props={Places}
+                  key={i}
+                >
                   <ListNum>{i + 1}</ListNum>
                   <ListDesc>
                     <p>{item.place_name}</p>
@@ -640,7 +671,16 @@ const Location = (props) => {
           }
         }}
       >
-        <FontAwesomeIcon icon={faPencilAlt} style={{ width: "20px", cursor: "pointer" }} />
+        <FontAwesomeIcon
+          icon={faPencilAlt}
+          style={{
+            position: "relative",
+            width: "20px",
+            cursor: "pointer",
+            height: "20px",
+            marginBottom: "10px",
+          }}
+        />
       </Button>
       {keywordToastState ? (
         <Toast message="검색 결과가 없습니다." />
@@ -648,8 +688,9 @@ const Location = (props) => {
         <Toast message="지도에 위치를 표시해 주세요!" />
       ) : searchToastState ? (
         <Toast message="검색어를 입력해 주세요!" />
-      ) : ""
-      }
+      ) : (
+        ""
+      )}
     </MapWrap>
   );
 };

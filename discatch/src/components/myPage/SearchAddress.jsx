@@ -34,7 +34,10 @@ const SearchAddress = (props) => {
   // 주소 등록하기
   const onCompletePost = (data) => {
     let fullAddr = `${data.sido} ${data.sigungu} ${data.bname}`;
+    // 시도 + 시군구 + 동
+
     if (fullAddr.split(" ").length === 4) {
+      // 시도 + 시군구 + 동이 4단어이면 시군구 + 동으로 설정
       fullAddr = `${data.sigungu} ${data.bname}`;
     }
     let extraAddr = "";
@@ -49,6 +52,7 @@ const SearchAddress = (props) => {
       fullAddr += extraAddr !== "" ? ` (${extraAddr})` : "";
     }
 
+    // 등록된 주소인지 확인
     if (
       props.Village[0]?.split(" ")[2] !== data.bname &&
       props.Village[1]?.split(" ")[2] !== data.bname &&

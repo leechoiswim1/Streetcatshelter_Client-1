@@ -83,7 +83,7 @@ const Community = (props) => {
               width="100px"
               height="100px"
               title="고양이 정보글!"
-              subtitle="고양이는 집사를 좋아해요~"
+              subtitle="고양이는 무엇을 좋아할까?"
             />
 
             <CommunityCategoryCard
@@ -97,7 +97,7 @@ const Community = (props) => {
               width="100px"
               height="100px"
               title={`${village} 동네 모임`}
-              subtitle="동네 고양이에 대해 얘기 나눠봐요!"
+              subtitle="우리 동네에 대해 이야기해봐요!"
             />
             <CommunityCategoryCard
               src={Community3}
@@ -120,8 +120,8 @@ const Community = (props) => {
               clickEvent={() => requestLocationInfo()}
               width="100px"
               height="100px"
-              title="고양이 정보글!"
-              subtitle="고양이는 츄르를 좋아해요~"
+              title="고양이 정보글"
+              subtitle="고양이는 무엇을 좋아할까~"
             />
             <CommunityCategoryCard
               src={Community2}
@@ -129,7 +129,7 @@ const Community = (props) => {
               width="100px"
               height="100px"
               title={`동네 모임`}
-              subtitle="동네 고양이에 대해 얘기 나눠봐요!"
+              subtitle="우리 동네에 대해 이야기해봐요!"
             />
             <CommunityCategoryCard
               src={Community3}

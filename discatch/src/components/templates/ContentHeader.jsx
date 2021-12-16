@@ -67,6 +67,7 @@ const ContentHeader = ({
   } else if (location !== "undefined") {
     locationName = location;
   }
+
   return (
     <>
       <Wrapper>
@@ -81,12 +82,10 @@ const ContentHeader = ({
           >
             <UserInfoBoxCenter onClick={OpenProfile}>
               <p>{nickname}</p>
-              <div style={{ display: "flex" }}>
-                {locationName !== null && (
-                  <span>{locationName?.split(" ")[2]}</span>
-                )}
-                <span>{CreatedAt}</span>
-              </div>
+              <InfoBoxBottom>
+                {locationName !== null && <p>{locationName}</p>}
+                <p>{CreatedAt}</p>
+              </InfoBoxBottom>
             </UserInfoBoxCenter>
             {nickname === userNickName && (
               <EditModalSlide
@@ -160,6 +159,15 @@ const UserInfoBoxCenter = styled.div`
   span {
     font-size: 12px;
     margin-right: 10px;
+  }
+`;
+
+const InfoBoxBottom = styled.div`
+  display: flex;
+  p {
+    font-size: 12px;
+    margin-right: 10px;
+    font-weight: 500;
   }
 `;
 

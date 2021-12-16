@@ -10,14 +10,24 @@ import styled, { css } from "styled-components";
 import { Grid, Text, Button } from "../../elements";
 
 // COMPONENTS
-import { Template, CommentList, Spinner, ContentHeader, SecondHeader } from "../../components";
+import {
+  Template,
+  CommentList,
+  Spinner,
+  ContentHeader,
+  SecondHeader,
+} from "../../components";
 
 // ICON
 import { CheckSquare } from "react-feather";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
 // REDUX
-import { __getCatDetail, __deleteCatDetail, __catDetailLike } from "../../redux/modules/cat";
+import {
+  __getCatDetail,
+  __deleteCatDetail,
+  __catDiaryLike,
+} from "../../redux/modules/cat";
 import { __getDetailComment } from "../../redux/modules/comment";
 import { history } from "../../redux/configureStore";
 
@@ -32,17 +42,27 @@ const CatDetailInfo = (props) => {
 
   // 동네 이름 설정
   let location;
-  if (userInfo.locationList && village === userInfo.locationList[0]?.split(" ")[2]) {
+  if (
+    userInfo.locationList &&
+    village === userInfo.locationList[0]?.split(" ")[2]
+  ) {
     location = userInfo.locationList[0];
-  } else if (userInfo.locationList && village === userInfo.locationList[1]?.split(" ")[2]) {
+  } else if (
+    userInfo.locationList &&
+    village === userInfo.locationList[1]?.split(" ")[2]
+  ) {
     location = userInfo.locationList[1];
-  } else if (userInfo.locationList && village === userInfo.locationList[2]?.split(" ")[2]) {
+  } else if (
+    userInfo.locationList &&
+    village === userInfo.locationList[2]?.split(" ")[2]
+  ) {
     location = userInfo.locationList[2];
   }
 
   // 고양이 상세 정보 좋아요 토글
   const likeToggle = () => {
-    dispatch(__catDetailLike(catDetailId));
+    const path = "diary";
+    dispatch(__catDiaryLike(catDetailId, path));
   };
 
   // 고양이 상세 정보 가져오기
@@ -234,7 +254,11 @@ const CatDetailInfo = (props) => {
             </Grid>
           </Grid>
         </Grid>
-        <CommentList props={commentList} path="CatDetailInfo" catId={catDetailId} />
+        <CommentList
+          props={commentList}
+          path="CatDetailInfo"
+          catId={catDetailId}
+        />
       </Template>
     </>
   );

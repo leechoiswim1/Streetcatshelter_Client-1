@@ -11,115 +11,90 @@ import { MoreHorizontal } from "react-feather";
 // COMPONENTS
 import { EditModalSlide, EmptyPost } from "../../components";
 
-// MOMENT
-import moment from "moment";
-
 // REDUX
 import { history } from "../../redux/configureStore";
 import { chatActions } from "../../redux/modules/chat";
 
-const ChatMain = (props) => {
+const ChatMain = ({ props, room, sendtime }) => {
   const dispatch = useDispatch();
-  const location = props.props.location.state.location;
-  const rooms = useSelector((state) => state.chat.roomlist);
+  const location = props.location.state.location;
   const [openModal, setOpenModal] = useState(false);
+
+  //방 삭제, 유저프로필 모달 버튼
+  const OpenModal = () => {
+    setOpenModal((openModal) => !openModal);
+  };
+
   return (
     <React.Fragment>
-      <Wrapper>
-        {rooms && rooms.length > 0 ? (
-          <>
-            {rooms.map((room, idx) => {
-              //header 마지막 활동 시간
-              const LastActivity = moment(room.lastActivity).format(
-                "YYYY-MM-DD HH:MM"
-              );
-              const hourDiff = moment(LastActivity).diff(moment(), "hours");
-              // format 1, 활동한 지 하루 경과했을 경우 : YYYY.MM.DD hh:mm
-              const updated = moment(LastActivity).format("YYYY-MM-DD HH:MM");
-              // format 2, 활동한 지 하루 이내일 경우 : 'n 분 전, n 시간 전'
-              const recentlyUpdated = moment(LastActivity).fromNow();
-              //시간 경과에 따라 시간포맷변경(하루기준)
-              const sendtime = hourDiff > -22 ? recentlyUpdated : updated;
-              return (
-                <ChatRoom key={idx}>
-                  <InnerBox>
-                    <LeftBox>
-                      <ProfileImg
-                        onClick={() => {
-                          history.push({
-                            pathname: `api/chat/enter/${room.roomId}`,
-                            state: {
-                              location: location,
-                            },
-                          });
-                        }}
-                        src={room.opponentImage}
-                        alt={room.opponentImage}
-                      />
-                    </LeftBox>
-                    <ChatInfo>
-                      <InfoHead>
-                        <InfoInner
-                          onClick={() => {
-                            history.push({
-                              pathname: `api/chat/enter/${room.roomId}`,
-                              state: {
-                                location: location,
-                              },
-                            });
-                          }}
-                        >
-                          <p>{room.opponent}</p>
-                          {room.lastActivity ? <p>{sendtime}</p> : ""}
-                        </InfoInner>
-                        <EditBtn>
-                          <MoreHorizontalBtn
-                            onClick={() => {
-                              setOpenModal(!openModal);
-                            }}
-                          />
-                        </EditBtn>
-                        {openModal && (
-                          <EditModalSlide
-                            FirstBtn="상대방 프로필보기"
-                            SecondBtn="채팅방 삭제하기"
-                            Profile="profile"
-                            FirstClick={() => {
-                              history.push(`/user/${room.userRandomId}`);
-                            }}
-                            openModal={openModal}
-                            SecondClick={() => {
-                              dispatch(chatActions._deleteRoom(room.roomId));
-                              setOpenModal(false);
-                            }}
-                          />
-                        )}
-                      </InfoHead>
+      <ChatRoom>
+        <InnerBox>
+          <LeftBox>
+            <ProfileImg
+              onClick={() => {
+                history.push({
+                  pathname: `api/chat/enter/${room.roomId}`,
+                  state: {
+                    location: location,
+                  },
+                });
+              }}
+              src={room.opponentImage}
+              alt={room.opponentImage}
+            />
+          </LeftBox>
+          <ChatInfo>
+            <InfoHead>
+              <InfoInner
+                onClick={() => {
+                  history.push({
+                    pathname: `api/chat/enter/${room.roomId}`,
+                    state: {
+                      location: location,
+                    },
+                  });
+                }}
+              >
+                <p>{room.opponent}</p>
+                {room.lastActivity ? <p>{sendtime}</p> : ""}
+              </InfoInner>
+              <EditBtn>
+                <MoreHorizontalBtn onClick={OpenModal} />
+              </EditBtn>
+              {openModal && (
+                <EditModalSlide
+                  FirstBtn="상대방 프로필보기"
+                  SecondBtn="채팅방 삭제하기"
+                  Profile="profile"
+                  FirstClick={() => {
+                    history.push(`/user/${room.userRandomId}`);
+                  }}
+                  openModal={openModal}
+                  SecondClick={() => {
+                    dispatch(chatActions._deleteRoom(room.roomId));
+                    setOpenModal(false);
+                  }}
+                />
+              )}
+            </InfoHead>
 
-                      <ChatMsg
-                        onClick={() => {
-                          history.push({
-                            pathname: `api/chat/enter/${room.roomId}`,
-                            state: {
-                              location: location,
-                            },
-                          });
-                        }}
-                      >
-                        {room.lastMessage === null
-                          ? `${room.opponent}와 채팅을 시작해보세요!`
-                          : room.lastMessage}
-                      </ChatMsg>
-                    </ChatInfo>
-                  </InnerBox>
-                </ChatRoom>
-              );
-            })}
-          </>
-        ) : (
-          <EmptyPost path="chat" />
-        )}
-      </Wrapper>
+            <ChatMsg
+              onClick={() => {
+                history.push({
+                  pathname: `api/chat/enter/${room.roomId}`,
+                  state: {
+                    location: location,
+                  },
+                });
+              }}
+            >
+              {room.lastMessage === null
+                ? `${room.opponent}와 채팅을 시작해보세요!`
+                : room.lastMessage}
+            </ChatMsg>
+          </ChatInfo>
+        </InnerBox>
+      </ChatRoom>
     </React.Fragment>
   );
 };
@@ -133,7 +108,7 @@ const MoreHorizontalBtn = styled(MoreHorizontal)`
     color: #cbcf52;
   }
 `;
-const Wrapper = styled.div``;
+
 const ChatRoom = styled.div`
   background: rgba(203, 207, 94, 0.3);
   width: 100%;

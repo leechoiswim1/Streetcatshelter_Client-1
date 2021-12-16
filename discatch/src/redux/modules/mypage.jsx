@@ -13,7 +13,6 @@ const _getUserInfo =
       const { data } = await myPageApi.getUserInfo();
       dispatch(setUserInfo(data));
     } catch (e) {
-      console.log(e);
       dispatch(userActions._logout());
     }
   };
@@ -25,9 +24,7 @@ const _getCalender =
       dispatch(itemLoading(true));
       const { data } = await myPageApi.getCalendar(year, month);
       dispatch(setCalendar(data));
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
 const _getCalenderDetail =
@@ -40,9 +37,7 @@ const _getCalenderDetail =
       } else {
         return dispatch(setCalendarDetail(data));
       }
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
 const _getLikedAllCat =
@@ -52,9 +47,7 @@ const _getLikedAllCat =
       dispatch(itemLoading(true));
       const { data } = await myPageApi.getLikedAllCat();
       dispatch(setLikedAllCat(data));
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
 const _getMoreLikedAllCat =
@@ -64,9 +57,7 @@ const _getMoreLikedAllCat =
       dispatch(itemLoading(true));
       const { data } = await myPageApi.getMoreLikedAllCat(page);
       dispatch(setMoreLikedAllCat(data));
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
 const _getNotice =
@@ -76,9 +67,7 @@ const _getNotice =
       dispatch(itemLoading(true));
       const { data } = await myPageApi.getNotice();
       dispatch(setNotice(data));
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
 const _getOneNotice =
@@ -88,9 +77,7 @@ const _getOneNotice =
       dispatch(itemLoading(true));
       const { data } = await myPageApi.getOneNotice(id);
       dispatch(setOneNotice(data));
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
 const _getUserProfile =
@@ -100,9 +87,7 @@ const _getUserProfile =
       dispatch(userLoading(true));
       const { data } = await myPageApi.getUserProfile(userRandomId);
       dispatch(setUserProfile(data));
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
 const _editMyInfo = (nickName, village, setUserToastState) => {

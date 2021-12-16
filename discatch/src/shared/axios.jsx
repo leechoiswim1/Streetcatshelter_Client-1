@@ -7,8 +7,8 @@ import { getToken } from "./token";
 axios.defaults.withCredentials = true;
 
 const instance = axios.create({
+  //배포 서버
   baseURL: "http://52.78.241.50/",
-  // baseURL: 'http://3.35.139.51/',
 });
 
 instance.interceptors.request.use((config) => {
@@ -90,7 +90,7 @@ export const catApi = {
   deleteCatDetail: (catDetailId) =>
     instance.delete(`/cat/detail/${catDetailId}`),
   catLike: (catId) => instance.post(`/cat/like/${catId}`),
-  catDetailLike: (catDetailId) =>
+  catDiaryLike: (catDetailId) =>
     instance.post(`/cat/detail/like/${catDetailId}`),
   editCatInfo: (catInfo, catId) => instance.put(`/cat/${catId}`, catInfo),
   editCatDetailInfo: (detailInfo, catDeatilId) =>

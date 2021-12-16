@@ -96,9 +96,7 @@ const ChatRoomPage = (props) => {
           );
         }
       );
-    } catch (e) {
-      console.log("error", e);
-    }
+    } catch (e) {}
   };
 
   // 다른 방을 클릭하거나 뒤로가기 버튼 클릭시 연결해제 및 구독해제
@@ -112,9 +110,7 @@ const ChatRoomPage = (props) => {
         },
         { token: token }
       );
-    } catch (e) {
-      console.log("연결 구독 해체 에러", e);
-    }
+    } catch (e) {}
   };
 
   // 웹소켓이 연결될 때 까지 실행하는 함수
@@ -148,9 +144,7 @@ const ChatRoomPage = (props) => {
           JSON.stringify(data)
         );
       });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   return (

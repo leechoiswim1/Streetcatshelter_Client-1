@@ -21,7 +21,7 @@ const MyPageNoticeList = (props) => {
   const dispatch = useDispatch();
   const isLoaded = useSelector((state) => state.mypage.itemLoaded);
 
-  //공지사항 가져오기
+  // 공지사항 가져오기
   useEffect(() => {
     dispatch(mypageActions._getNotice());
   }, [dispatch]);

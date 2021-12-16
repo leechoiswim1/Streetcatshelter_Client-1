@@ -22,7 +22,7 @@ const MyPageNotices = (props) => {
   const id = props.match.params.noticeId;
   const isLoaded = useSelector((state) => state.mypage.itemLoaded);
 
-  //공지사항 디테일 가져오기
+  // 공지사항 디테일 가져오기
   useEffect(() => {
     dispatch(mypageActions._getOneNotice(id));
   }, [id, dispatch]);

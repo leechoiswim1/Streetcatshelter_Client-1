@@ -64,7 +64,7 @@ const CommunityDetail = (props) => {
   // 동네 이름
   const location = props.match.params.village;
 
-  // pathname에 따른 카테고리 분류 
+  // pathname에 따른 카테고리 분류
   let category = null;
   let nextPath = null;
   if (path.pathname === `/community/${location}/catinfo`) {
@@ -132,7 +132,16 @@ const CommunityDetail = (props) => {
         }
         is_float="is_float"
       >
-        <FontAwesomeIcon icon={faPencilAlt} style={{ width: "20px", cursor: "pointer" }} />
+        <FontAwesomeIcon
+          icon={faPencilAlt}
+          style={{
+            position: "relative",
+            width: "20px",
+            cursor: "pointer",
+            height: "20px",
+            marginBottom: "10px",
+          }}
+        />
       </Button>
     </Template>
   );

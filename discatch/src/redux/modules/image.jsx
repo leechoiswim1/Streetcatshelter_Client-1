@@ -58,7 +58,7 @@ const uploadImagesDB = (callNext) => {
 
       const upload = new AWS.S3.ManagedUpload({
         params: {
-          Bucket: "discatch",
+          Bucket: "discatch.site",
           Key: img.name,
           Body: img,
         },
@@ -70,9 +70,7 @@ const uploadImagesDB = (callNext) => {
         .then((data) => {
           dispatch(uploadImages(data.Location));
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     }
     callNext();
   };
@@ -107,9 +105,7 @@ const uploadImageDB = (callNext) => {
         .then((data) => {
           dispatch(uploadImage(data.Location));
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     }
     callNext();
   };

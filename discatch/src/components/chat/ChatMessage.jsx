@@ -46,7 +46,7 @@ const ChatMessage = ({ roomId, cntChat }) => {
       setPage(Page);
       dispatch(chatActions._getMessage(roomId, Page));
     }
-  }, [roomId, Page]);
+  }, [roomId, Page, dispatch]);
 
   //채팅 무한 스크롤
   const observerRef = useRef();

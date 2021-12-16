@@ -1,5 +1,3 @@
-import test from "./test";
-
 // MYPAGE
 import MyPageCat from "./mypage/MyPageCat";
 import MyPageNoticeList from "./mypage/MyPageNoticeList";
@@ -35,13 +33,12 @@ import Map from "./map/Map";
 import ChatMainPage from "./chat/ChatMainPage";
 import ChatRoomPage from "./chat/ChatRoomPage";
 
-//NOTFOUND
+// NOTFOUND
 import NotFound from "./notFound/NotFound";
 
 import Slider from "./slider/Slider";
 
 export {
-  test,
   NotFound,
   Slider,
   UserInfoWrite,

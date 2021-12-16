@@ -55,7 +55,7 @@ const CatInfoWrite = (props) => {
     dispatch(imgActions.setFile(file));
     setFileUrl(imageUrl);
   };
-  //중성화 셀렉트박스
+  // 중성화 셀렉트박스
   const Options = [
     { key: 1, value: "중성화 여부" },
     { key: 2, value: "알수없음" },
@@ -126,7 +126,7 @@ const CatInfoWrite = (props) => {
           );
     }
   };
-  //해쉬태그 입력하기
+  // 해쉬태그 입력하기
   const publish = (catTag) => {
     if (catTag !== "") {
       dispatch(addHashTag(catTag));
@@ -135,11 +135,11 @@ const CatInfoWrite = (props) => {
       setTagState(true);
     }
   };
-  //해쉬태그 삭제
+  // 해쉬태그 삭제
   const DeleteHashTag = (hashtag) => {
     dispatch(deleteHashTag(hashtag));
   };
-  //수정모드시 태그 셋팅
+  // 수정모드시 태그 셋팅
   useEffect(() => {
     dispatch(setInitialState([]));
     if (edit) {

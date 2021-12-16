@@ -56,7 +56,7 @@ const ToastBox = styled.div`
   align-items: center;
   font-size: ${(props) => (props.message2 ? "12px" : "13px")};
   margin: ${(props) => (props.message2 ? "0px auto" : "auto")};
-  font-weight: 700;
+  font-weight: 500;
   word-break: keep-all;
   visibility: visible;
   animation: ${fadeIn} 0.5s, ${fadeOut} 0.5s 1s;

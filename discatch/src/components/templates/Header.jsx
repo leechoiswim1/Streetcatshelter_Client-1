@@ -35,6 +35,7 @@ const Header = (props) => {
   const [toastState, setToastState] = useState(false);
   const chatToastState = useSelector((state) => state.chat.toast);
 
+  //동네 설정
   const userLocation = useSelector((state) => state.map.keywordList[0]);
   location = userLocation ? userLocation : firstLocation;
 
@@ -49,7 +50,10 @@ const Header = (props) => {
     location = locationA.pathname.split("/")[3];
   }
 
-  if (userInfo.locationList && !(userInfo.locationList.join('').includes(location))) {
+  if (
+    userInfo.locationList &&
+    !userInfo.locationList.join("").includes(location)
+  ) {
     location = userInfo?.locationList[0]?.split(" ")[2];
   }
 
@@ -60,7 +64,7 @@ const Header = (props) => {
   if (location?.split(" ").length === 3) {
     location = location?.split(" ")[2];
   }
-  
+
   const sameLocationList = userInfo.locationList?.filter(
     (v) => v.split(" ")[2] === location
   );
@@ -96,10 +100,13 @@ const Header = (props) => {
 
   const [place, setPlace] = useState(location);
   // const [openAlram, setOpenAlram] = useState(false);
+
+  //랜더시 첫번째 로케이션을 가져온다
   useEffect(() => {
     dispatch(searchMap(firstLocation));
   }, [firstLocation, dispatch]);
 
+  //랜더시 유저 인포를 가져온다.
   useEffect(() => {
     if (!token) {
       return;
@@ -131,13 +138,13 @@ const Header = (props) => {
       { key: 3, value: location3 },
     ];
   }
-
+  //동네 변경 함수
   const onChangeHandler = (e) => {
     setPlace(e.target.value);
     const keyword = e.target.value;
     dispatch(searchMap(keyword));
   };
-
+  //뒤로가기 함수
   const goBack = () => {
     if (path === "/community/:village/:category") {
       history.push({ pathname: "/community", state: { location } });
@@ -164,7 +171,7 @@ const Header = (props) => {
     }
   };
 
-  // 토스트 모달 
+  // 토스트 모달
   useEffect(() => {
     if (toastState) {
       setTimeout(() => {
@@ -282,35 +289,35 @@ const SideBtnBox = styled.div`
     width: 25%;
   }
 `;
-const SearchInput = styled.input`
-  width: 90%;
-  height: 30px;
-  border: none;
-  margin-left: 10px;
-`;
-const SearchBarBtn = styled.div`
-  width: 50px;
-  height: 35px;
-  border-radius: 15px;
-  background: #fbd986;
-  margin: auto;
-  p {
-    margin: 5px;
-    font-weight: 900;
-  }
-`;
-const SearchBar = styled.div`
-  width: 90%;
-  height: 35px;
-  border-radius: 15px;
-  border: 1px solid #fbd986;
-  margin: auto;
-  display: flex;
-  background: #fefdf8;
-`;
-const SearchBtn = styled(Search)`
-  cursor: pointer;
-`;
+// const SearchInput = styled.input`
+//   width: 90%;
+//   height: 30px;
+//   border: none;
+//   margin-left: 10px;
+// `;
+// const SearchBarBtn = styled.div`
+//   width: 50px;
+//   height: 35px;
+//   border-radius: 15px;
+//   background: #fbd986;
+//   margin: auto;
+//   p {
+//     margin: 5px;
+//     font-weight: 900;
+//   }
+// `;
+// const SearchBar = styled.div`
+//   width: 90%;
+//   height: 35px;
+//   border-radius: 15px;
+//   border: 1px solid #fbd986;
+//   margin: auto;
+//   display: flex;
+//   background: #fefdf8;
+// `;
+// const SearchBtn = styled(Search)`
+//   cursor: pointer;
+// `;
 const HeaderStyle = styled.header`
   max-width: 420px;
   width: 100%;
@@ -343,7 +350,7 @@ const Head = styled.div`
     line-height: 60px;
     margin: 0px auto;
     font-size: 35px;
-    font-weight: 700;
+    font-weight: 900;
     color: #fbd986;
     @media screen and (max-width: 359px) {
       font-size: 30px;
@@ -354,7 +361,7 @@ const Head = styled.div`
   }
   span {
     font-size: 45px;
-    font-weight: 800;
+    font-weight: 900;
     color: #cbcf52;
     @media screen and (max-width: 359px) {
       font-size: 40px;

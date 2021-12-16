@@ -25,14 +25,14 @@ const MyPage = (props) => {
   const likedAllCat = useSelector((state) => state.mypage.likedAllCat);
   const isLoaded = useSelector((state) => state.mypage.itemLoaded);
 
-  //좋아요를 누른 고양이 가져오기
+  // 좋아요를 누른 고양이 가져오기
   useEffect(() => {
     dispatch(resetList());
     setPage(1);
     dispatch(mypageActions._getLikedAllCat());
   }, [dispatch]);
 
-  //무한스크롤
+  // 무한스크롤
   const [page, setPage] = useState(1);
   const [ref, inView] = useInView({
     threshold: 0,

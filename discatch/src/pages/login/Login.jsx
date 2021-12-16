@@ -92,6 +92,9 @@ const Inner = styled.div`
   height: 600px;
   margin: auto;
   filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
+  @media screen and (max-height: 568px) {
+    height: 500px;
+  }
 `;
 const Head = styled.div`
   height: 35%;
@@ -101,6 +104,9 @@ const Head = styled.div`
     font-weight: 700;
     color: #fbd986;
     margin-top: 55%;
+    @media screen and (max-height: 568px) {
+      margin-top: 50%;
+    }
   }
   span {
     font-size: 50px;

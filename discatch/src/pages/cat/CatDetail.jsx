@@ -71,7 +71,7 @@ const CatDetail = (props) => {
     dispatch(__getComment(catId));
   }, [catId, commentList.length, dispatch]);
 
-  //삭제시 확인 토스트
+  // 삭제 시 확인 토스트
   useEffect(() => {
     if (deleteToast) {
       setTimeout(() => {
@@ -79,6 +79,7 @@ const CatDetail = (props) => {
       }, 1500);
     }
   }, [deleteToast, dispatch]);
+  
   return (
     <>
       <Template props={props}>
