@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 
 const instance = axios.create({
   //배포 서버
-  baseURL: "http://52.78.241.50/",
+  baseURL: "https://discatchserver.shop",
 });
 
 instance.interceptors.request.use((config) => {

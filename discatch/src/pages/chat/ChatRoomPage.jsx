@@ -55,7 +55,7 @@ const ChatRoomPage = (props) => {
   }, [roomId, dispatch]);
 
   //소켓연결
-  const sock = new SockJS("http://52.78.241.50/ws-stomp");
+  const sock = new SockJS("https://discatchserver.shop/ws-stomp");
   const ws = Stomp.over(sock);
 
   //랜더시 구독시작 뒤로가기시 소켓연결 구독해제
